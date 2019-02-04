@@ -106,7 +106,7 @@ def go():
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
-                time.sleep(0.25)
+                time.sleep(1)
                      
             accepted = broadcast(signed_tx)
             for_removal = non_accept_check(check, accepted)
