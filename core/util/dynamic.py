@@ -27,7 +27,7 @@ class Dynamic:
 
 
     def get_dynamic_fee(self):
-        if self.network is None or self.network['constants'][0]['fees']['dynamic'] is False:
+        if self.network is None or self.network['constants'][1]['fees']['dynamic'] is False:
             # standard transaction fees
             transaction_fee = int(1 * atomic)
         else:
