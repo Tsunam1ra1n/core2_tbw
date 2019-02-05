@@ -4,7 +4,7 @@ from crypto.transactions.builder.transfer import Transfer
 from tbw import parse_config
 from util.sql import SnekDB
 from util.dynamic import Dynamic
-from ark import ArkClient
+from client import ArkClient
 from datetime import datetime
 import time
 import os
@@ -13,9 +13,9 @@ from dotenv import load_dotenv
 atomic = 100000000
 
 
-def get_client(ip="localhost", api_version='v2'):
+def get_client(ip="localhost"):
     port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api/'.format(ip, port), api_version=api_version)
+    return ArkClient('http://{0}:{1}/api'.format(ip, port))
 
 
 def broadcast(tx):
@@ -82,7 +82,7 @@ def go():
         signed_tx = []
 
         # get max blast tx and check for unprocessed payments
-        max_tx = os.getenv("ARK_TRANSACTION_POOL_MAX_PER_REQUEST")
+        max_tx = os.getenv("PHANTOM_TRANSACTION_POOL_MAX_PER_REQUEST")
         if max_tx == None:
             unprocessed_pay = snekdb.stagedArkPayment().fetchall()
         else:
@@ -106,7 +106,7 @@ def go():
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
-                time.sleep(0.25)
+                time.sleep(1)
                      
             accepted = broadcast(signed_tx)
             for_removal = non_accept_check(check, accepted)

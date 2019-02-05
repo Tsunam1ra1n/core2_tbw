@@ -12,7 +12,7 @@ class Dynamic:
         self.dot = None
 
     def get_node_configs(self):
-        envpath = '/home/' + self.username + '/.ark/config/'
+        envpath = '/home/' + self.username + '/.phantom/config/'
         # check if there is a network file
         if os.path.exists(envpath + 'network.json') is True:
             with open(envpath + 'network.json') as network_file:
@@ -27,9 +27,9 @@ class Dynamic:
 
 
     def get_dynamic_fee(self):
-        if self.network is None or self.network['constants'][0]['fees']['dynamic'] is False:
+        if self.network is None or self.network['constants'][1]['fees']['dynamic'] is False:
             # standard transaction fees
-            transaction_fee = int(.1 * atomic)
+            transaction_fee = int(1 * atomic)
         else:
             # get size of transaction - S
             standard_tx = 230
